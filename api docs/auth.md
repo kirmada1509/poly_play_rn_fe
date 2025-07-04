@@ -64,9 +64,9 @@ curl -X POST "http://localhost:8000/auth/signup" \
 
 ---
 
-### 2. User signin
+### 2. User Login
 
-**Endpoint:** `POST /auth/signin`
+**Endpoint:** `POST /auth/login`
 
 **Description:** Authenticate user and receive access token
 
@@ -102,14 +102,14 @@ curl -X POST "http://localhost:8000/auth/signup" \
 - `access_token` (string): JWT token for authentication
 
 **Status Codes:**
-- `200`: Successful signin
+- `200`: Successful login
 - `401`: Invalid credentials or email not found
 - `400`: Invalid request data
 - `422`: Validation error
 
 **Example cURL:**
 ```bash
-curl -X POST "http://localhost:8000/auth/signin" \
+curl -X POST "http://localhost:8000/auth/login" \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -161,7 +161,7 @@ curl -X GET "http://localhost:8000/auth/me" \
 ## Authentication Flow
 
 1. **Registration**: Use `/auth/signup` to create a new user account
-2. **signin**: Use `/auth/signin` to authenticate and receive an access token
+2. **Login**: Use `/auth/login` to authenticate and receive an access token
 3. **Protected Requests**: Include the access token in the `Authorization` header as `Bearer <token>` for all protected endpoints
 4. **User Info**: Use `/auth/me` to get current user information
 
