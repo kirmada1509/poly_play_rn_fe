@@ -1,11 +1,21 @@
 // src/lib/apiClient.ts
 import { useAuthStore } from '@/src/lib/auth/auth-store';
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const BASE_URL = 'https://your-api.com/api'; // change this
+const BASE_URL = 'http://192.168.29.57:8000';
+
+// Toggle logging for production vs development
+const ENABLE_LOGGING = __DEV__ ?? true;
 
 class APIClient {
   private client: AxiosInstance;
+
+  private log(type: 'request' | 'response' | 'error', data: any) {
+    if (!ENABLE_LOGGING) return;
+    
+    const emoji = type === 'request' ? '🚀' : type === 'response' ? '✅' : '❌';
+    console.log(`${emoji} API ${type}:`, data);
+  }
 
   constructor() {
     this.client = axios.create({
@@ -22,14 +32,53 @@ class APIClient {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // Log outgoing request
+        this.log('request', {
+          method: config.method?.toUpperCase(),
+          url: `${config.baseURL}${config.url}`,
+          headers: config.headers,
+          data: config.data,
+          params: config.params,
+          timestamp: new Date().toISOString()
+        });
+
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => {
+        this.log('error', { message: 'Request setup failed', error });
+        return Promise.reject(error);
+      }
     );
 
     this.client.interceptors.response.use(
-      (res) => res,
+      (response: AxiosResponse) => {
+        // Log successful response
+        this.log('response', {
+          method: response.config.method?.toUpperCase(),
+          url: `${response.config.baseURL}${response.config.url}`,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          data: response.data,
+          duration: response.headers['x-response-time'] || 'N/A',
+          timestamp: new Date().toISOString()
+        });
+
+        return response;
+      },
       async (error: AxiosError) => {
+        // Log error response
+        this.log('error', {
+          method: error.config?.method?.toUpperCase(),
+          url: error.config ? `${error.config.baseURL}${error.config.url}` : 'Unknown',
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          errorMessage: error.message,
+          responseData: error.response?.data,
+          timestamp: new Date().toISOString()
+        });
+
         if (error.response?.status === 401) {
           useAuthStore.getState().logout(); // optional: force logout on token expire
         }

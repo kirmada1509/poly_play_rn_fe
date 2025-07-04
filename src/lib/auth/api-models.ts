@@ -1,9 +1,9 @@
-export interface LoginRequest {
+export interface signinRequest {
 	email: string;
 	password: string;
 }
 
-export interface LoginResponse {
+export interface signinResponse {
 	access_token: string;
 }
 

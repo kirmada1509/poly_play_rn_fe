@@ -1,7 +1,7 @@
 this is an online multiplayer ludo game. I want you to create a color scheme for my app keeping in mind the ludo aspect 
 and setup for use in nativewind. I also create an index.tsx to show different colors
 
-I want you to create api services which will have api client, please use tanstackquery, zustand. then utilities like logger, toast, snackbar etc so that so can debug my app easily and afterwards login screen, signup screen and use expo's protected routes to go to (app) which for now will have a simple screen with user profile and logout button. please add proper log messages
-and dont forget to store access token locally and check for it during login.
+I want you to create api services which will have api client, please use tanstackquery, zustand. then utilities like logger, toast, snackbar etc so that so can debug my app easily and afterwards signin screen, signup screen and use expo's protected routes to go to (app) which for now will have a simple screen with user profile and logout button. please add proper log messages
+and dont forget to store access token locally and check for it during signin.
 
-here's the login api #file:auth-api.md
+here's the signin api #file:auth-api.md
