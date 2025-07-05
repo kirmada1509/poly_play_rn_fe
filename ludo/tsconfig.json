@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["ludo/src/components/*"],
+      "@/screens/*": ["./src/screens/*"],
+      "@/hooks/*": ["ludo/src/hooks/*"],
+      "@/services/*": ["ludo/src/services/*"],
+      "@/store/*": ["ludo/src/store/*"],
+      "@/api/*": ["./src/api/*"],
+      "@/models/*": ["ludo/src/models/*"],
+      "@/utils/*": ["ludo/src/utils/*"],
+      "@/websocket/*": ["./src/websocket/*"]
+    },
+    "types": ["react-native"]
+  },
+  "extends": "expo/tsconfig.base",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
